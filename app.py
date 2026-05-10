@@ -122,7 +122,12 @@ CATEGORIES = [
                         "id": "2.1", "name": "Universal access – Compliance",
                         "questions": [{
                             "qid": "A_Q8", "type": TYPE_YESNO_IDK,
-                            "text": "Does the building comply with the Catalan Accessibility Code (Decree 209/2023) to ensure accessibility throughout the building, including entrances, corridors, and restrooms? Select the option that applies best. (Yes: the building in-use or the project fully complies, or has been fully adapted to be universally accessible according to its typology. No: the building in-use does not comply, even if it partially complies or is in process of adaptation. I don't know: there is no way at this moment for the respondent to know if the building complies with the current Decree.)",
+                            "text": "Does the building comply with the Catalan Accessibility Code (Decree 209/2023) to ensure accessibility throughout the building, including entrances, corridors, and restrooms? Select the option that applies best.",
+                            "captions": [
+                                "the building in-use or the project fully complies, or has been fully adapted to be universally accessible according to its typology.",
+                                "the building in-use does not comply, even if it partially complies or is in process of adaptation.",
+                                "there is no way at this moment for the respondent to know if the building complies with the current Decree.",
+                            ],
                         }],
                     },
                     {
@@ -1005,6 +1010,7 @@ VISIBILITY_RULES = {
     "A_Q13": ("A_Q12", "Yes"),
     "A_Q15": ("A_Q14", "Yes"),
     "A_Q19": ("A_Q18", "Yes"),
+    "A_Q20": ("A_Q18", "Yes"),
     "A_Q22": ("A_Q21", "Yes"),
     # Category B
     "B_Q2":  ("B_Q1",  "Yes"),
@@ -1369,7 +1375,8 @@ def render_question(q):
     elif qtype == TYPE_YESNO:
         st.radio(label, ["Yes", "No"], key=qid, index=None, horizontal=True)
     elif qtype == TYPE_YESNO_IDK:
-        st.radio(label, ["Yes", "No", "I don't know"], key=qid, index=None, horizontal=True)
+        st.radio(label, ["Yes", "No", "I don't know"], key=qid, index=None,
+                 horizontal=True, captions=q.get("captions"))
     elif qtype == TYPE_YESNO_NA:
         st.radio(label, ["Yes", "No", "N/A"], key=qid, index=None, horizontal=True)
     elif qtype == TYPE_SCREENING:
@@ -1546,6 +1553,7 @@ def render_results():
 # App layout
 # ============================================================
 st.title("Health-Promoting Spaces Scoring Tool")
+st.text_input("Project name", key="project_name", placeholder="Enter project name")
 st.caption(
     "MVP. Use the sidebar to navigate categories. Skipped questions, N/A and "
     "\"I don't know\" answers are excluded from scoring per the official rules."
