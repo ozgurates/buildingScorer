@@ -68,13 +68,28 @@ def collect_answers(session_state) -> dict:
 
 
 def _build_credentials():
-    """Load service-account credentials from env JSON or local file."""
+    """Load service-account credentials.
+
+    Resolution order:
+      1. GOOGLE_CREDENTIALS_JSON env var (full JSON as a string)
+      2. Streamlit secrets section [gcp_service_account]
+      3. Local credentials file at GOOGLE_CREDENTIALS_PATH
+    """
     from google.oauth2.service_account import Credentials
 
     inline = os.getenv("GOOGLE_CREDENTIALS_JSON")
     if inline:
         info = json.loads(inline)
         return Credentials.from_service_account_info(info, scopes=_SCOPES)
+
+    try:
+        import streamlit as st
+        if "gcp_service_account" in st.secrets:
+            info = dict(st.secrets["gcp_service_account"])
+            return Credentials.from_service_account_info(info, scopes=_SCOPES)
+    except Exception:
+        pass
+
     return Credentials.from_service_account_file(
         GOOGLE_CREDENTIALS_PATH, scopes=_SCOPES
     )
