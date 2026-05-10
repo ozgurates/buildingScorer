@@ -1,5 +1,30 @@
+import os
+
 import streamlit as st
 import plotly.graph_objects as go
+
+# When deployed on Streamlit Community Cloud, secrets come from st.secrets
+# (TOML in the dashboard). Mirror them into os.environ so the rest of the
+# app can keep reading config via os.getenv. Must run before sheets and
+# email_sender are imported.
+_SECRET_KEYS = (
+    "SENDER_EMAIL",
+    "SENDER_APP_PASSWORD",
+    "RECIPIENT_EMAIL",
+    "GOOGLE_CREDENTIALS_PATH",
+    "SPREADSHEET_NAME",
+    "GOOGLE_CREDENTIALS_JSON",
+)
+try:
+    for _k in _SECRET_KEYS:
+        if _k in st.secrets and _k not in os.environ:
+            os.environ[_k] = str(st.secrets[_k])
+except Exception:
+    pass
+
+import email_sender
+import pdf_report
+import sheets
 
 st.set_page_config(
     page_title="Health-Promoting Spaces Scorer",
@@ -12,6 +37,16 @@ st.set_page_config(
 for _k in list(st.session_state.keys()):
     if _k.startswith(("A_", "B_", "C_", "D_", "E_")):
         st.session_state[_k] = st.session_state[_k]
+
+
+def autosave():
+    """on_change callback: snapshot current state and push to Sheets in the background."""
+    sid = st.session_state.get("session_id")
+    if not sid or not st.session_state.get("survey_started"):
+        return
+    last_page = st.session_state.get("nav_selection") or ""
+    answers = sheets.collect_answers(st.session_state)
+    sheets.save_session_async(sid, last_page, answers)
 
 # ============================================================
 # Question type constants
@@ -1371,21 +1406,26 @@ def render_question(q):
     if qtype == TYPE_MULTI:
         st.markdown(label)
         for i, item in enumerate(q["sub_items"]):
-            st.radio(item, ["Yes", "No"], key=f"{qid}_{i}", index=None, horizontal=True)
+            st.radio(item, ["Yes", "No"], key=f"{qid}_{i}", index=None,
+                     horizontal=True, on_change=autosave)
     elif qtype == TYPE_YESNO:
-        st.radio(label, ["Yes", "No"], key=qid, index=None, horizontal=True)
+        st.radio(label, ["Yes", "No"], key=qid, index=None, horizontal=True,
+                 on_change=autosave)
     elif qtype == TYPE_YESNO_IDK:
         st.radio(label, ["Yes", "No", "I don't know"], key=qid, index=None,
-                 horizontal=True, captions=q.get("captions"))
+                 horizontal=True, captions=q.get("captions"), on_change=autosave)
     elif qtype == TYPE_YESNO_NA:
-        st.radio(label, ["Yes", "No", "N/A"], key=qid, index=None, horizontal=True)
+        st.radio(label, ["Yes", "No", "N/A"], key=qid, index=None, horizontal=True,
+                 on_change=autosave)
     elif qtype == TYPE_SCREENING:
-        st.radio(label, ["Yes", "No"], key=qid, index=None, horizontal=True)
+        st.radio(label, ["Yes", "No"], key=qid, index=None, horizontal=True,
+                 on_change=autosave)
     elif qtype == TYPE_SCREENING_NA:
-        st.radio(label, ["Yes", "No", "N/A"], key=qid, index=None, horizontal=True)
+        st.radio(label, ["Yes", "No", "N/A"], key=qid, index=None, horizontal=True,
+                 on_change=autosave)
     elif qtype == TYPE_GRADED:
         labels = [opt["label"] for opt in q["options"]]
-        st.radio(label, labels, key=qid, index=None)
+        st.radio(label, labels, key=qid, index=None, on_change=autosave)
 
 
 def render_category(category):
@@ -1412,8 +1452,62 @@ def render_category(category):
         )
 
 
+def _build_scores_dict():
+    """Build the structured scores dict consumed by pdf_report.generate_pdf."""
+    out = {
+        "project_name": st.session_state.get("project_name", "") or "",
+        "categories": {},
+    }
+    for cat in CATEGORIES:
+        cat_s = category_score(cat)
+        cat_entry = {
+            "score": None if cat_s is None else cat_s * 100,
+            "attributes": {},
+        }
+        for attr in cat["attributes"]:
+            a_s = attribute_score(cat, attr)
+            attr_entry = {
+                "score": None if a_s is None else a_s * 100,
+                "indicators": {},
+            }
+            for ind in attr["indicators"]:
+                i_s = indicator_score(cat, ind)
+                attr_entry["indicators"][ind["name"]] = (
+                    None if i_s is None else i_s * 100
+                )
+            cat_entry["attributes"][attr["name"]] = attr_entry
+        out["categories"][cat["name"]] = cat_entry
+    return out
+
+
 def render_results():
+    sid = st.session_state.get("session_id")
+    if sid and not st.session_state.get("_marked_completed"):
+        sheets.mark_completed(
+            sid,
+            "📊 Results",
+            sheets.collect_answers(st.session_state),
+        )
+        st.session_state["_marked_completed"] = True
     st.header("📊 Results")
+    if sid:
+        st.success(
+            f"✅ Your response has been saved. Session code: **{sid}**"
+        )
+
+    if st.button("📧 Send Report", type="primary"):
+        try:
+            with st.spinner("Generating report and sending email..."):
+                scores = _build_scores_dict()
+                pdf_bytes = pdf_report.generate_pdf(scores, sid or "—")
+                ok = email_sender.send_report(pdf_bytes, sid or "—")
+            if ok:
+                st.success("Report sent successfully")
+            else:
+                err = email_sender.last_error() or "unknown error"
+                st.error(f"Failed to send report: {err}")
+        except Exception as exc:
+            st.error(f"Failed to generate or send report: {exc}")
 
     # Overall scores per category
     cat_scores = []
@@ -1550,10 +1644,66 @@ def render_results():
 
 
 # ============================================================
+# Session gate: pick "new" or "resume" before the survey renders
+# ============================================================
+if "survey_started" not in st.session_state:
+    st.session_state.survey_started = False
+
+if not st.session_state.survey_started:
+    st.title("Health-Promoting Spaces Scoring Tool")
+    st.write("Welcome. Choose how you'd like to begin:")
+    mode = st.radio(
+        "Mode",
+        ["Start new survey", "Resume existing survey"],
+        index=None,
+        label_visibility="collapsed",
+    )
+
+    if mode == "Start new survey":
+        if st.button("Start", type="primary"):
+            st.session_state.session_id = sheets.generate_session_id()
+            st.session_state.survey_started = True
+            st.rerun()
+    elif mode == "Resume existing survey":
+        code = st.text_input(
+            "Enter your session code (e.g. ABC-1234)",
+            key="_resume_code_input",
+            placeholder="ABC-1234",
+        )
+        if st.button("Resume", type="primary"):
+            normalized = (code or "").strip().upper()
+            if not normalized:
+                st.error("Please enter a session code.")
+            else:
+                data = sheets.load_session(normalized)
+                if data is None:
+                    st.error(
+                        "Session code not found. Check the code or start a new survey."
+                    )
+                else:
+                    for k, v in data["answers"].items():
+                        st.session_state[k] = v
+                    st.session_state.session_id = normalized
+                    st.session_state.survey_started = True
+                    last_page = data.get("last_page") or ""
+                    if last_page:
+                        st.session_state["nav_selection"] = last_page
+                    st.rerun()
+
+    st.stop()
+
+
+# ============================================================
 # App layout
 # ============================================================
+st.info(
+    f"📋 Your session code: **{st.session_state.session_id}** — save this to resume later"
+)
 st.title("Health-Promoting Spaces Scoring Tool")
-st.text_input("Project name", key="project_name", placeholder="Enter project name")
+st.text_input(
+    "Project name", key="project_name", placeholder="Enter project name",
+    on_change=autosave,
+)
 st.caption(
     "MVP. Use the sidebar to navigate categories. Skipped questions, N/A and "
     "\"I don't know\" answers are excluded from scoring per the official rules."
@@ -1562,7 +1712,12 @@ st.caption(
 with st.sidebar:
     st.markdown("### Navigation")
     nav_options = [f"{c['id']}. {c['name']}" for c in CATEGORIES] + ["📊 Results"]
-    selection = st.radio("Section", nav_options, label_visibility="collapsed")
+    if st.session_state.get("nav_selection") not in nav_options:
+        st.session_state["nav_selection"] = nav_options[0]
+    selection = st.radio(
+        "Section", nav_options, label_visibility="collapsed",
+        key="nav_selection", on_change=autosave,
+    )
 
     st.divider()
     st.markdown("### Category scores")
@@ -1582,7 +1737,40 @@ with st.sidebar:
         for key in list(st.session_state.keys()):
             if key.startswith(("A_", "B_", "C_", "D_", "E_")):
                 del st.session_state[key]
+        st.session_state.survey_started = False
+        st.session_state.pop("session_id", None)
+        st.session_state.pop("_marked_completed", None)
+        st.session_state.pop("nav_selection", None)
         st.rerun()
+
+    st.divider()
+    with st.expander("🔧 Sheets diagnostic"):
+        if st.button("Test connection", use_container_width=True):
+            ok, err = sheets.test_connection()
+            if ok:
+                st.success("Connected to Google Sheets ✅")
+            else:
+                st.error(err)
+        if st.button("Sync save now", use_container_width=True):
+            sid = st.session_state.get("session_id")
+            if not sid:
+                st.warning("No session id yet.")
+            else:
+                ok = sheets._save_blocking(
+                    sid,
+                    st.session_state.get("nav_selection") or "",
+                    sheets.collect_answers(st.session_state),
+                    "in_progress",
+                )
+                if ok:
+                    st.success("Saved synchronously ✅")
+                else:
+                    st.error(sheets.last_error() or "Unknown error")
+        last = sheets.last_error()
+        if last:
+            st.caption(f"Last error: {last}")
+        else:
+            st.caption("No errors recorded yet.")
 
 # Main pane
 if selection == "📊 Results":
