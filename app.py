@@ -1745,6 +1745,13 @@ with st.sidebar:
 
     st.divider()
     with st.expander("🔧 Sheets diagnostic"):
+        st.caption("Config keys visible to the app:")
+        for _k in _SECRET_KEYS:
+            _v = os.environ.get(_k, "")
+            if _v:
+                st.caption(f"• {_k}: ✅ loaded ({len(_v)} chars)")
+            else:
+                st.caption(f"• {_k}: ❌ missing")
         if st.button("Test connection", use_container_width=True):
             ok, err = sheets.test_connection()
             if ok:
