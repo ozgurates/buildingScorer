@@ -31,6 +31,32 @@ def last_error() -> str | None:
     return _last_error
 
 
+def _build_ssl_context() -> ssl.SSLContext:
+    """Build an SSL context that works behind corporate TLS-intercepting proxies.
+
+    Resolution order:
+      1. SSL_CERT_FILE env var (explicit CA bundle path).
+      2. `truststore` package — uses the OS trust store (macOS Keychain,
+         Windows cert store, Linux system CAs) so corporate root CAs are
+         picked up automatically.
+      3. `certifi` bundle (works on clean networks).
+      4. Python default.
+    """
+    cert_file = os.getenv("SSL_CERT_FILE")
+    if cert_file and os.path.exists(cert_file):
+        return ssl.create_default_context(cafile=cert_file)
+    try:
+        import truststore  # type: ignore
+        return truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+    except ImportError:
+        pass
+    try:
+        import certifi
+        return ssl.create_default_context(cafile=certifi.where())
+    except ImportError:
+        return ssl.create_default_context()
+
+
 def send_report(pdf_bytes: bytes, session_id: str) -> bool:
     global _last_error
     if not SENDER_EMAIL or not SENDER_APP_PASSWORD or not RECIPIENT_EMAIL:
@@ -57,11 +83,7 @@ def send_report(pdf_bytes: bytes, session_id: str) -> bool:
     )
 
     try:
-        try:
-            import certifi
-            ctx = ssl.create_default_context(cafile=certifi.where())
-        except ImportError:
-            ctx = ssl.create_default_context()
+        ctx = _build_ssl_context()
         password = SENDER_APP_PASSWORD.replace(" ", "")
         with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, context=ctx) as server:
             server.login(SENDER_EMAIL, password)
