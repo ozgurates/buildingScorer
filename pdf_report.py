@@ -170,8 +170,12 @@ def generate_pdf(scores: dict, session_id: str) -> bytes:
             temp_paths.append(path)
             story.append(Image(path, width=15 * cm, height=10.8 * cm))
             story.append(Spacer(1, 0.3 * cm))
-        except Exception:
-            pass
+        except Exception as exc:
+            story.append(
+                Paragraph(
+                    f"<i>(Category radar chart unavailable: {exc})</i>", body
+                )
+            )
 
     # Category summary table
     story.append(Paragraph("Category scores", h2))
@@ -206,8 +210,13 @@ def generate_pdf(scores: dict, session_id: str) -> bytes:
                 temp_paths.append(path)
                 story.append(Image(path, width=14 * cm, height=10 * cm))
                 story.append(Spacer(1, 0.3 * cm))
-            except Exception:
-                pass
+            except Exception as exc:
+                story.append(
+                    Paragraph(
+                        f"<i>(Attribute radar chart unavailable: {exc})</i>",
+                        body,
+                    )
+                )
 
         for attr_name, attr_data in attr_items:
             story.append(

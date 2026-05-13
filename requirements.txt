@@ -3,7 +3,7 @@ plotly>=5.18
 gspread>=6.0
 google-auth>=2.0
 reportlab>=4.0
-kaleido>=0.2
+kaleido==0.2.1
 certifi
 truststore>=0.9
 python-dotenv>=1.0
