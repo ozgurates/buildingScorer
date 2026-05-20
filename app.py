@@ -1033,6 +1033,9 @@ CATEGORIES = [
     },
 ]
 
+# TODO: Remove this filter once all categories are ready for testing.
+CATEGORIES = [c for c in CATEGORIES if c["id"] == "A"]
+
 
 # ============================================================
 # Skip-logic visibility rules
