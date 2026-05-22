@@ -1454,6 +1454,14 @@ def render_category(category):
             f"{', '.join(unanswered)}. All questions must be answered."
         )
 
+    # If ALL categories are complete, show a "See Results" button
+    all_complete = all(not get_unanswered_questions(c) for c in CATEGORIES)
+    if all_complete:
+        st.divider()
+        if st.button("📊 See Results", type="primary", use_container_width=True):
+            st.session_state["_go_to_results"] = True
+            st.rerun()
+
 
 def _build_scores_dict():
     """Build the structured scores dict consumed by pdf_report.generate_pdf."""
@@ -1498,19 +1506,27 @@ def render_results():
             f"✅ Your response has been saved. Session code: **{sid}**"
         )
 
-    if st.button("📧 Send Report", type="primary"):
-        try:
-            with st.spinner("Generating report and sending email..."):
-                scores = _build_scores_dict()
-                pdf_bytes = pdf_report.generate_pdf(scores, sid or "—")
-                ok = email_sender.send_report(pdf_bytes, sid or "—")
-            if ok:
-                st.success("Report sent successfully")
-            else:
-                err = email_sender.last_error() or "unknown error"
-                st.error(f"Failed to send report: {err}")
-        except Exception as exc:
-            st.error(f"Failed to generate or send report: {exc}")
+    st.divider()
+    with st.container(border=True):
+        st.header("📧 Send your report")
+        st.markdown(
+            "<p style='font-size:1.2rem;'>Click below to generate a PDF report and send it via email.</p>",
+            unsafe_allow_html=True,
+        )
+        if st.button("📧 Send Report", type="primary", use_container_width=True):
+            try:
+                with st.spinner("Generating report and sending email..."):
+                    scores = _build_scores_dict()
+                    pdf_bytes = pdf_report.generate_pdf(scores, sid or "—")
+                    ok = email_sender.send_report(pdf_bytes, sid or "—")
+                if ok:
+                    st.success("Report sent successfully")
+                else:
+                    err = email_sender.last_error() or "unknown error"
+                    st.error(f"Failed to send report: {err}")
+            except Exception as exc:
+                st.error(f"Failed to generate or send report: {exc}")
+    st.divider()
 
     # Overall scores per category
     cat_scores = []
@@ -1699,14 +1715,30 @@ if not st.session_state.survey_started:
 # ============================================================
 # App layout
 # ============================================================
+# Handle deferred navigation (avoid modifying widget key after instantiation)
+if st.session_state.pop("_go_to_results", False):
+    st.session_state["nav_selection"] = "📊 Results"
+
 st.info(
     f"📋 Your session code: **{st.session_state.session_id}** — save this to resume later"
 )
-st.title("Health-Promoting Spaces Scoring Tool")
-st.text_input(
-    "Project name", key="project_name", placeholder="Enter project name",
-    on_change=autosave,
-)
+if not st.session_state.get("project_confirmed"):
+    with st.container(border=True):
+        st.markdown("⚠️ **Please enter the project name to begin:**")
+        st.text_input(
+            "Project name", key="project_name", placeholder="Enter project name",
+            on_change=autosave,
+            label_visibility="collapsed",
+        )
+        if st.button("🚀 Start Assessment", type="primary", use_container_width=True):
+            if not st.session_state.get("project_name", "").strip():
+                st.error("❌ Please fill in the project name before starting.")
+            else:
+                st.session_state["project_confirmed"] = True
+                st.rerun()
+    st.stop()
+
+st.subheader(f"Project: {st.session_state.get('project_name', '')}")
 st.caption(
     "MVP. Use the sidebar to navigate categories. Skipped questions, N/A and "
     "\"I don't know\" answers are excluded from scoring per the official rules."
@@ -1744,6 +1776,7 @@ with st.sidebar:
         st.session_state.pop("session_id", None)
         st.session_state.pop("_marked_completed", None)
         st.session_state.pop("nav_selection", None)
+        st.session_state.pop("project_confirmed", None)
         st.rerun()
 
     st.divider()
