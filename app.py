@@ -35,7 +35,7 @@ st.set_page_config(
 # Streamlit drops widget state when the widget isn't on the current page.
 # Re-binding each saved answer to itself preserves it across navigation.
 for _k in list(st.session_state.keys()):
-    if _k.startswith(("A_", "B_", "C_", "D_", "E_")):
+    if _k.startswith(("A_", "B_", "C_", "D_", "E_")) or _k == "project_name":
         st.session_state[_k] = st.session_state[_k]
 
 
@@ -1033,9 +1033,6 @@ CATEGORIES = [
     },
 ]
 
-# TODO: Remove this filter once all categories are ready for testing.
-CATEGORIES = [c for c in CATEGORIES if c["id"] == "A"]
-
 
 # ============================================================
 # Skip-logic visibility rules
@@ -1488,6 +1485,22 @@ def _build_scores_dict():
                 )
             cat_entry["attributes"][attr["name"]] = attr_entry
         out["categories"][cat["name"]] = cat_entry
+    # Compute overall score
+    valid = [v["score"] for v in out["categories"].values() if v["score"] is not None]
+    out["overall_score"] = sum(valid) / len(valid) if valid else None
+    # Score interpretation
+    if out["overall_score"] is not None:
+        s = out["overall_score"]
+        if s >= 90:
+            out["rating"], out["meaning"], out["action"] = "Excellent", "Exceptional, exceeds best practice", "Celebrate & share as model"
+        elif s >= 70:
+            out["rating"], out["meaning"], out["action"] = "Good", "Solid, meets healthy building goals", "Sustain; minor tweaks"
+        elif s >= 50:
+            out["rating"], out["meaning"], out["action"] = "Satisfactory", "Basic adequacy, noticeable gaps possible", "Targeted improvements"
+        elif s >= 25:
+            out["rating"], out["meaning"], out["action"] = "Poor", "Significant deficits, occupant health at risk", "Priority intervention"
+        else:
+            out["rating"], out["meaning"], out["action"] = "Critical", "Critical failure, immediate action needed", "Red alert / retrofit"
     return out
 
 
@@ -1518,7 +1531,13 @@ def render_results():
                 with st.spinner("Generating report and sending email..."):
                     scores = _build_scores_dict()
                     pdf_bytes = pdf_report.generate_pdf(scores, sid or "—")
-                    ok = email_sender.send_report(pdf_bytes, sid or "—")
+                    ok = email_sender.send_report(
+                        pdf_bytes, sid or "—",
+                        overall_score=scores.get("overall_score"),
+                        rating=scores.get("rating"),
+                        meaning=scores.get("meaning"),
+                        action=scores.get("action"),
+                    )
                 if ok:
                     st.success("Report sent successfully")
                 else:
@@ -1704,8 +1723,14 @@ if not st.session_state.survey_started:
                         st.session_state[k] = v
                     st.session_state.session_id = normalized
                     st.session_state.survey_started = True
+                    # Restore project_confirmed if project_name exists
+                    if st.session_state.get("project_name"):
+                        st.session_state["project_confirmed"] = True
                     last_page = data.get("last_page") or ""
-                    if last_page:
+                    # For completed sessions, go straight to results
+                    if data.get("status") == "completed":
+                        st.session_state["nav_selection"] = "📊 Results"
+                    elif last_page:
                         st.session_state["nav_selection"] = last_page
                     st.rerun()
 

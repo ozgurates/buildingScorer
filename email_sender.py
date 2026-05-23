@@ -57,7 +57,7 @@ def _build_ssl_context() -> ssl.SSLContext:
         return ssl.create_default_context()
 
 
-def send_report(pdf_bytes: bytes, session_id: str) -> bool:
+def send_report(pdf_bytes: bytes, session_id: str, overall_score=None, rating=None, meaning=None, action=None) -> bool:
     global _last_error
     if not SENDER_EMAIL or not SENDER_APP_PASSWORD or not RECIPIENT_EMAIL:
         _last_error = (
@@ -65,6 +65,18 @@ def send_report(pdf_bytes: bytes, session_id: str) -> bool:
             "RECIPIENT_EMAIL is not set in .env / Streamlit secrets."
         )
         return False
+
+    score_line = ""
+    if overall_score is not None:
+        score_line = f"\nOverall Score: {overall_score:.1f} / 100"
+        if rating:
+            score_line += f"\nRating: {rating}"
+            score_line += f"\nMeaning: {meaning}"
+            score_line += f"\nAction: {action}"
+        score_line += "\n"
+    else:
+        score_line = "\nOverall Score: excluded (no valid category scores)\n"
+
     msg = EmailMessage()
     msg["From"] = SENDER_EMAIL
     msg["To"] = RECIPIENT_EMAIL
@@ -72,7 +84,8 @@ def send_report(pdf_bytes: bytes, session_id: str) -> bool:
     msg.set_content(
         "Hello,\n\n"
         f"The Health-Promoting Spaces Assessment Report for session "
-        f"{session_id} is attached.\n\n"
+        f"{session_id} is attached.\n"
+        f"{score_line}\n"
         "Regards"
     )
     msg.add_attachment(
