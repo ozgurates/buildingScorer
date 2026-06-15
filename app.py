@@ -1460,14 +1460,43 @@ def render_category(category):
             st.rerun()
 
 
+# Category contribution weights for overall score.
+# Requested distribution:
+# B = 25%, E = 25%, A/C/D share the remaining 50% equally.
+CATEGORY_WEIGHTS = {
+    "A": 1.0 / 6.0,
+    "B": 0.25,
+    "C": 1.0 / 6.0,
+    "D": 1.0 / 6.0,
+    "E": 0.25,
+}
+
+
+def weighted_overall_score(cat_scores):
+    """Compute weighted overall score from [(cat_id, score_0_to_1), ...]."""
+    weighted_sum = 0.0
+    total_weight = 0.0
+    for cat_id, score in cat_scores:
+        if score is None:
+            continue
+        w = CATEGORY_WEIGHTS.get(cat_id)
+        if w is None:
+            continue
+        weighted_sum += score * w
+        total_weight += w
+    return (weighted_sum / total_weight) if total_weight > 0 else None
+
+
 def _build_scores_dict():
     """Build the structured scores dict consumed by pdf_report.generate_pdf."""
     out = {
         "project_name": st.session_state.get("project_name", "") or "",
         "categories": {},
     }
+    category_weight_inputs = []
     for cat in CATEGORIES:
         cat_s = category_score(cat)
+        category_weight_inputs.append((cat["id"], cat_s))
         cat_entry = {
             "score": None if cat_s is None else cat_s * 100,
             "attributes": {},
@@ -1486,8 +1515,8 @@ def _build_scores_dict():
             cat_entry["attributes"][attr["name"]] = attr_entry
         out["categories"][cat["name"]] = cat_entry
     # Compute overall score
-    valid = [v["score"] for v in out["categories"].values() if v["score"] is not None]
-    out["overall_score"] = sum(valid) / len(valid) if valid else None
+    overall_0_to_1 = weighted_overall_score(category_weight_inputs)
+    out["overall_score"] = None if overall_0_to_1 is None else overall_0_to_1 * 100
     # Score interpretation
     if out["overall_score"] is not None:
         s = out["overall_score"]
@@ -1553,17 +1582,16 @@ def render_results():
         s = category_score(cat)
         cat_scores.append((cat, s))
 
-    valid_scores = [s for _, s in cat_scores if s is not None]
-    overall = sum(valid_scores) / len(valid_scores) if valid_scores else None
+    overall = weighted_overall_score([(cat["id"], s) for cat, s in cat_scores])
 
     top_left, top_right = st.columns([1, 2])
 
     with top_left:
         if overall is None:
-            st.metric("Overall (mean of categories)", "—")
+            st.metric("Overall (weighted by category)", "—")
         else:
             score_pct = overall * 100
-            st.metric("Overall (mean of categories)", f"{score_pct:.1f} / 100")
+            st.metric("Overall (weighted by category)", f"{score_pct:.1f} / 100")
             # Score interpretation
             if score_pct >= 90:
                 lbl, color, meaning, action = "Excellent", "green", "Exceptional, exceeds best practice", "Celebrate & share as model"
