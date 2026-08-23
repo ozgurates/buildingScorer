@@ -81,7 +81,7 @@ CATEGORIES = [
                         "id": "1.1", "name": "Walkability – Daily Needs",
                         "questions": [{
                             "qid": "A_Q1", "type": TYPE_MULTI,
-                            "text": "Are the following daily services or amenities accessible within approximately a 5–6-minute walking distance from the main building entrance?",
+                            "text": "Are the following daily services or amenities accessible within approximately a 9- 10-minute (800 meters) walking distance from the main building entrance?",
                             "sub_items": [
                                 "Public transit stops (e.g., bus, train, metro, or tram)",
                                 "Food access point (e.g., supermarket, grocery store, fresh food market, café or restaurant for daily meals)",
@@ -96,7 +96,7 @@ CATEGORIES = [
                         "id": "1.2", "name": "Walkability – Physical Activity & Recreation",
                         "questions": [{
                             "qid": "A_Q2", "type": TYPE_MULTI,
-                            "text": "Are the following physical activities or recreational amenities accessible within approximately a 5–6-minute walking distance from the main building entrance?",
+                            "text": "Are the following physical activities or recreational amenities accessible within approximately a 9- 10-minute (800 meters) walking distance from the main building entrance?",
                             "sub_items": [
                                 "Public outdoor green space (e.g., parks, plazas, pedestrian zones with tree-planted areas with benches for rest; sidewalks don’t apply)",
                                 "Sports and physical activity facilities (e.g., gyms, fitness centers, sports courts, swimming pools, dance or movement studios, outdoor exercise areas)",
@@ -121,9 +121,9 @@ CATEGORIES = [
                             "qid": "A_Q4", "type": TYPE_MULTI,
                             "text": "How does the building support safe and accessible arrival and access for all users? Indicate whether the following conditions are met.",
                             "sub_items": [
-                                "Safe drop-off or pick-up areas are provided where relevant to the building type (excluding schools) (e.g., healthcare facilities, elderly care, or buildings serving vulnerable users)",
+                                "Safe drop-off or pick-up opportunities are available close to the main building entrance (e.g., for older adults, injured individuals, or people with reduced mobility).",
                                 "Pedestrian access routes from the street to the building entrance are safe and accessible (e.g., step-free access, clear paths, appropriate crossings or separation from vehicle traffic)",
-                                "Arrival areas are designed to minimize conflicts between pedestrians, cyclists, and vehicles (e.g., clear circulation paths, or designated zones)",
+                                "Pedestrian and bicycle routes connecting to the building are designed to minimize conflicts with vehicle traffic (e.g., through physical separation, protected pedestrian or bicycle lanes, traffic calming measures, shared-space design, or pedestrian-priority environments).",
                             ],
                         }],
                     },
@@ -135,16 +135,16 @@ CATEGORIES = [
                         }],
                     },
                     {
-                        "id": "1.6", "name": "Bicycle routes",
+                        "id": "1.6", "name": "Access by Bicycle",
                         "questions": [
                             {"qid": "A_Q6", "type": TYPE_SCREENING,
-                             "text": "Are there bicycle routes within the proximity of the main building entrance?"},
+                             "text": "Can the building be accessed by bicycle through dedicated cycling infrastructure or other cycling routes?"},
                             {"qid": "A_Q7", "type": TYPE_GRADED,
                              "text": "What are the characteristics of the bicycle routes? Choose one that applies.",
                              "options": [
-                                 {"label": "All the following elements are present: separate from motor vehicles; accessible directly from the building entrance; uninterrupted by driveways or vehicular crossings for the entire route to key destinations.", "score": 1.0},
-                                 {"label": "Some of the following elements are present: only partially separate from motor vehicles; occasional interruptions by driveways or vehicle crossings; not continuously accessible from the main entrance.", "score": 0.5},
-                                 {"label": "None of the required elements are present: existing bicycle routes do not meet basic separation and continuity requirements.", "score": 0.0},
+                                 {"label": "The cycling route is direct, continuous, and physically protected or separated from motor vehicle traffic, with minimal interruptions.", "score": 1.0},
+                                 {"label": "The cycling route provides generally safe access but meets only some of the recommended characteristics (e.g., traffic-calmed streets, bicycle-priority streets, shared streets, or intermittent dedicated infrastructure).", "score": 0.5},
+                                 {"label": "The cycling route provides only basic access and lacks most of the recommended characteristics (e.g., discontinuous route, frequent conflicts with vehicles, or significant interruptions).", "score": 0.0},
                              ]},
                         ],
                     },
@@ -171,7 +171,7 @@ CATEGORIES = [
                             "qid": "A_Q9", "type": TYPE_MULTI,
                             "text": "Does the building design support inclusive and safe use of restroom facilities and related amenities by people of different genders and needs? What characteristics are present?",
                             "sub_items": [
-                                "The building provides male and female restrooms as well as a universal single-user restroom (universal restroom: fully enclosed room with toilet and sink inside, usable by any gender and by caregivers or people needing assistance)",
+                                "The building provides a universal single-user restroom, either alongside male and female restrooms or as the primary restroom facility (Universal restroom: a fully enclosed room with a toilet and sink, usable by any gender and by caregivers or people needing assistance).",
                                 "Restroom signage clearly indicates available options (e.g., male, female, universal/all-gender, accessible) to support user choice and comfort",
                                 "Changing tables are provided in locations accessible to all users (not restricted to a single gender restroom)",
                             ],
@@ -186,7 +186,7 @@ CATEGORIES = [
                         "id": "3.1", "name": "Wayfinding signage",
                         "questions": [{
                             "qid": "A_Q10", "type": TYPE_YESNO,
-                            "text": "Are wayfinding signs and clear signage, as designed, available in key locations and main circulation areas to make internal navigation easier for all building users (e.g., in the main lobby, main corridors, and elevator waiting areas)?",
+                            "text": "Are wayfinding signs and clear signage, as designed, available where appropriate to the building size and layout in key locations and main circulation areas to make internal navigation easier for all building users (e.g., in the main lobby, main corridors, and restrooms)?",
                         }],
                     },
                     {
@@ -297,10 +297,10 @@ CATEGORIES = [
                             {"qid": "A_Q21", "type": TYPE_SCREENING_NA,
                              "text": "Does the building design include a stair connecting publicly accessible floors that can be used by occupants for movement between floors? (Select N/A if, e.g., the facility has only one floor.)"},
                             {"qid": "A_Q22", "type": TYPE_MULTI,
-                             "text": "Which of the following design strategies for promoting stair use have been implemented in the building (excluding emergency exit stair)?",
+                             "text": "Which of the following design strategies for promoting stair use have been implemented in the building?",
                              "sub_items": [
                                  "Basic Access: at least one stairwell connects all publicly accessible floors (e.g., from lobby to upper floor)",
-                                 "Full Building Access: at least one stairwell connects all floors of the building, from top to bottom",
+                                 "Continuous Vertical Access: At least one stairwell provides continuous access between all floors of the building, allowing users to travel from the lowest to the highest floor without changing staircases.",
                                  "Prominent Location: the main stair is located in a visible, prominent place (e.g., near elevators or the main lobby)",
                                  "Safety Enhancements: the stair environment includes high-visibility safety features applied consistently across the stair (e.g., contrasting treads, continuous handrails)",
                                  "Aesthetics: the stair environment includes at least one enhancing element (e.g., art, color, natural or artificial lighting, music) applied along the stair path",
@@ -314,7 +314,7 @@ CATEGORIES = [
                 "id": "7", "name": "Ergonomics",
                 "indicators": [
                     {
-                        "id": "7.1", "name": "Ergonomic Design",
+                        "id": "7.1", "name": "Ergonomics and Workstation Design",
                         "questions": [{
                             "qid": "A_Q23", "type": TYPE_MULTI,
                             "text": "Which of the following design characteristics describes how regularly occupied spaces support ergonomic posture, comfort, and safe use? (Guidance may be found in ISO ergonomic standards, occupational health recommendations, or workplace ergonomics guidelines.)",
@@ -322,6 +322,10 @@ CATEGORIES = [
                                 "Seating in work, waiting, or meeting areas is designed or selected to support comfortable posture in most areas (more than half of relevant spaces) (e.g., chairs with back support, appropriate seat height and depth)",
                                 "Circulation and layout allow sufficient space for comfortable movement and safe use of furniture and equipment in most areas (more than half of relevant spaces)",
                                 "Furniture design accommodates a range of users and body sizes, including the provision of adjustable or ergonomically designed elements in most areas (more than half of relevant spaces) (e.g., varied seating types, adjustable workstations)",
+                                {
+                                    "text": "Work surfaces and furniture are designed to minimise prolonged pressure, continuous body contact, and repetitive mechanical stress (e.g., rounded desk edges and appropriate work surface design) in most areas (more than half of relevant spaces)",
+                                    "options": ["Yes", "No", "N/A"],
+                                },
                             ],
                         }],
                     },
@@ -385,7 +389,10 @@ CATEGORIES = [
                             "text": "Are interior finishes and materials applied to most (more than half) of the main interior surfaces (e.g., floors, walls, ceilings, counters, partitions) specified or selected based on their contribution to occupant health? (Recognized healthy-materials resources: Friendly Materials, Habitable, GBCE materials platform.)",
                             "sub_items": [
                                 "The main interior horizontal and vertical surfaces (e.g., floors, walls, worktops) are finished with continuous, non-porous materials that prevent dirt accumulation, are resistant to frequent cleaning and disinfectant products",
-                                "Finishes and materials used in main interior surfaces have low emissions of volatile organic compounds (e.g., low-VOC or certified low-emission products)",
+                                {
+                                    "text": "Finishes and materials used in main interior surfaces have low emissions of volatile organic compounds (e.g., low-VOC or certified low-emission products)",
+                                    "options": ["Yes", "No", "I don't know"],
+                                },
                             ],
                         }],
                     },
@@ -504,7 +511,7 @@ CATEGORIES = [
                         "id": "3.6", "name": "Contact reduction",
                         "questions": [{
                             "qid": "B_Q20", "type": TYPE_GRADED,
-                            "text": "Do interaction points (e.g., security checkpoints, reception areas, checkout counters) include spatial or physical measures that help reduce close-contact exposure between individuals (e.g., barriers, increased spacing, or layout separation)? Choose one that applies.",
+                            "text": "Do interaction points (e.g., security checkpoints, reception areas, checkout counters) include spatial or physical measures (e.g., increased spacing between people in waiting areas, furniture layouts that help prevent crowding, circulation layouts designed to reduce frequent crossing of pedestrian flows) that help reduce close proximity between individuals (e.g., barriers, increased spacing, or layout separation)? Choose one that applies",
                             "options": [
                                 {"label": "Yes, interaction areas include design elements such as barriers, spacing, or layout features that reduce close contact.", "score": 1.0},
                                 {"label": "Some, measures are present in some areas but not consistently across interaction points.", "score": 0.5},
@@ -664,7 +671,9 @@ CATEGORIES = [
                         "id": "2.1", "name": "Outdoor nature views",
                         "questions": [
                             {"qid": "D_Q4", "type": TYPE_SCREENING_NA,
-                             "text": "Does the building design enable access to outdoor views of natural elements from regularly occupied spaces?"},
+                             "text": "Does the building design enable access to at least some views of natural outdoor elements from regularly occupied spaces (e.g., workspaces, lounges, waiting or seating areas)?",
+                             "note": "Natural views include vegetation, trees, gardens, water features, and open sky. Views limited only to buildings or hard surfaces are not considered nature views.",
+                             "captions": ["", "", "(there are no permanent work areas or regularly occupied spaces where occupants remain for extended periods)"]},
                             {"qid": "D_Q5", "type": TYPE_MULTI,
                              "text": "Outdoor nature view characteristics:",
                              "sub_items": [
@@ -758,10 +767,16 @@ CATEGORIES = [
                             {"qid": "E_Q1", "type": TYPE_YESNO_IDK,
                              "text": "Does the building comply with applicable national or local regulations for protection against external noise (CTE DB-HR in Spain), including the acoustic insulation requirements corresponding to the building's environmental noise classification? (Applicable regulation: CTE DB-HR / Local noise maps or acoustic zoning.)"},
                             {"qid": "E_Q2", "type": TYPE_MULTI,
-                             "text": "How does the building design reduce exposure to exterior noise in regularly occupied areas? Indicate whether the following conditions are met in most (more than half) of applicable spaces.",
+                             "text": "How does the building design reduce exposure to exterior noise in regularly occupied areas? Indicate whether the following conditions are met in most (more than half) of applicable spaces. Select 'N/A' if the building or project is located in an environment without significant external noise exposure.",
                              "sub_items": [
-                                 "The building envelope (e.g., fa\u00e7ade, windows, doors) includes acoustic insulation measures designed to reduce external noise intrusion into regularly occupied spaces",
-                                 "Buffer zones or spatial strategies (e.g., entrance lobbies, corridors, intermediate spaces, setbacks from noise sources or surrounding vegetation) help reduce exposure to outdoor noise",
+                                 {
+                                     "text": "The building envelope (e.g., fa\u00e7ade, windows, doors) includes acoustic insulation measures designed to reduce external noise intrusion into regularly occupied spaces",
+                                     "options": ["Yes", "No", "N/A"],
+                                 },
+                                 {
+                                     "text": "Buffer zones or spatial strategies (e.g., entrance lobbies, corridors, intermediate spaces, setbacks from noise sources or surrounding vegetation) help reduce exposure to outdoor noise",
+                                     "options": ["Yes", "No", "N/A"],
+                                 },
                              ]},
                         ],
                     },
@@ -856,7 +871,7 @@ CATEGORIES = [
                             "sub_items": [
                                 "Building systems are designed (e.g., HVAC humidity control, ventilation design, or design calculations/simulations) to maintain indoor humidity within recommended ranges (typically ~30–60% RH)",
                                 "Ventilation systems, building systems (e.g., HVAC), or passive strategies include humidity control or moisture management strategies where relevant (e.g., exhaust fans in bathrooms/kitchens, mechanical ventilation, or natural ventilation strategies)",
-                                "Building envelope and ventilation design reduce risks of condensation or moisture accumulation (e.g., insulated façades/windows, vapor barriers, or adequate ventilation in humid areas)",
+                                "Building envelope and ventilation design reduce risks of condensation or moisture accumulation to prevent persistent dampness, mold, and biological growth (e.g., insulated façades/windows, vapor barriers, or adequate ventilation in humid areas).",
                             ],
                         }],
                     },
@@ -880,24 +895,34 @@ CATEGORIES = [
                         "id": "4.2", "name": "Entryway systems / Outdoor pollutant prevention",
                         "questions": [{
                             "qid": "E_Q12", "type": TYPE_MULTI,
-                            "text": "How does the building design limit outdoor pollutants entering indoor spaces? Indicate whether the following conditions are met in most (more than half) of applicable spaces. (Entryway systems prevent outdoor pollutants from entering.)",
+                            "text": "How does the building design limit outdoor pollutants entering indoor spaces? Indicate whether the following conditions are met in most (more than half) of applicable spaces. Select 'N/A' if additional airflow reduction strategies are not relevant or proportionate to the building context.",
                             "sub_items": [
                                 "Main entrances include entryway systems that capture dirt and pollutants, extending approximately 3 m (or the maximum available length) in the direction of travel and covering the full width of the entrance path (e.g., walk-off mats or equivalent systems)",
-                                "Entrances are designed to reduce direct airflow from outdoors into occupied spaces (e.g., vestibules, air curtains, or double-door entry layouts)",
+                                {
+                                    "text": "Entrances are designed to reduce direct airflow from outdoors into occupied spaces (e.g., vestibules, air curtains, or double-door entry layouts)",
+                                    "options": ["Yes", "No", "N/A"],
+                                },
                             ],
                         }],
                     },
                     {
-                        "id": "4.3", "name": "Asbestos Safety",
-                        "questions": [{
-                            "qid": "E_Q13", "type": TYPE_GRADED,
-                            "text": "Which statement best describes how asbestos risks affecting indoor air quality are addressed in the building? Choose one that applies.",
-                            "options": [
-                                {"label": "Yes, the building was constructed after the ban on asbestos-containing materials in Spain (2002) and no asbestos-containing materials are known or documented; or the building was constructed before the ban and a professional assessment has confirmed the absence of asbestos materials (remediation has been implemented by qualified professionals).", "score": 1.0},
-                                {"label": "No, the building was constructed before the ban and asbestos assessment has not been conducted, and the presence of asbestos-containing materials is unknown.", "score": 0.0},
-                                {"label": "I don't know, documentation/information not available.", "score": None},
-                            ],
-                        }],
+                        "id": "4.3", "name": "Building-Specific Environmental Health Hazards",
+                        "questions": [
+                            {
+                                "qid": "E_Q13", "type": TYPE_GRADED,
+                                "text": "Which statement best describes how asbestos risks affecting indoor air quality are addressed in the building? Choose one that applies.",
+                                "options": [
+                                    {"label": "The building was constructed after the ban on asbestos-containing materials in Spain (2002) and no asbestos-containing materials are known or documented; or the building was constructed before the ban and a professional assessment has confirmed the absence of asbestos materials (remediation has been implemented by qualified professionals).", "score": 1.0},
+                                    {"label": "The building was constructed before the ban and asbestos assessment has not been conducted, and the presence of asbestos-containing materials is unknown.", "score": 0.0},
+                                    {"label": "I don't know, documentation/information not available.", "score": None},
+                                ],
+                            },
+                            {
+                                "qid": "E_Q13b", "type": TYPE_YESNO_IDK,
+                                "text": "Has the building design incorporated appropriate radon protection measures (e.g., radon-proof membranes, foundations designed to prevent radon entry, or ventilation systems to reduce radon accumulation), aiming to minimize radon exposure beyond minimum regulatory requirements?",
+                                "note": "Note: Radon may pose greater health risks for vulnerable populations (e.g., children, older adults, pregnant women, and people with chronic health conditions). In addition to minimum regulatory requirements, health-based recommendations (e.g., WHO guidance) may also be considered as good practice (e.g., aiming for the WHO-recommended reference level of 100 Bq/m³, compared with the current Spanish reference level of 300 Bq/m³).",
+                            },
+                        ],
                     },
                     {
                         "id": "4.4", "name": "Source separation",
@@ -937,7 +962,8 @@ CATEGORIES = [
                             "qid": "E_Q17", "type": TYPE_MULTI,
                             "text": "How does the building design support the monitoring and control of indoor air quality conditions? (Indoor air quality may be assessed according to RITE, WHO Indoor Air Quality Guidelines, ASHRAE 62.1, or EN 16798-1. Monitoring commonly includes CO\u2082, particulate matter, VOCs, temperature, and humidity.)",
                             "sub_items": [
-                                "Design includes indoor air quality monitoring systems or sensors (e.g., CO\u2082, particulate matter, VOCs, temperature, humidity) accessible to building managers and/or shared with occupants",
+                                "Design includes monitoring systems or sensors for indoor environmental conditions (e.g., temperature and humidity) accessible to building managers and/or occupants.",
+                                "Design includes indoor air quality monitoring and/or assessment appropriate to the building and its location (e.g., CO₂, particulate matter, VOCs) with information accessible to building managers and/or occupants.",
                                 "The building includes design strategies to limit indoor pollutant sources (e.g., ventilation design, filtration, low-emission materials)",
                                 "Ventilation and filtration systems that are included in the building design allow proper maintenance and filter replacement in accordance with manufacturer or regulatory requirements",
                             ],
@@ -968,8 +994,8 @@ CATEGORIES = [
                             "text": "How does the building design provide and make potable drinking water accessible?",
                             "sub_items": [
                                 "Drinking water is available through fountains or refill stations connected to the building's potable water supply",
-                                "Drinking water points are adequately distributed and located in accessible common areas or circulation spaces",
-                                "Drinking water access (e.g., fountains or refill stations) is provided or planned to support the use of refillable bottles",
+                                "Drinking water points are adequately distributed and located in accessible common areas or circulation spaces, regardless of the type of water supply system (e.g., water dispensers or bottled water stations).",
+                                "Drinking water access (e.g., fountains or refill stations) is provided or planned to support the use of refillable bottles, regardless of the type of drinking water provision system.",
                             ],
                         }],
                     },
@@ -1406,14 +1432,26 @@ def render_question(q):
     if qtype == TYPE_MULTI:
         st.markdown(label)
         for i, item in enumerate(q["sub_items"]):
-            st.radio(item, ["Yes", "No"], key=f"{qid}_{i}", index=None,
+            if isinstance(item, dict):
+                sub_text, sub_options = item["text"], item.get("options", ["Yes", "No"])
+            else:
+                sub_text, sub_options = item, ["Yes", "No"]
+            st.radio(sub_text, sub_options, key=f"{qid}_{i}", index=None,
                      horizontal=True, on_change=autosave)
     elif qtype == TYPE_YESNO:
         st.radio(label, ["Yes", "No"], key=qid, index=None, horizontal=True,
                  on_change=autosave)
     elif qtype == TYPE_YESNO_IDK:
-        st.radio(label, ["Yes", "No", "I don't know"], key=qid, index=None,
-                 horizontal=True, captions=q.get("captions"), on_change=autosave)
+        note = q.get("note")
+        if note:
+            st.markdown(label)
+            st.caption(note)
+            st.radio(label, ["Yes", "No", "I don't know"], key=qid, index=None,
+                     horizontal=True, captions=q.get("captions"),
+                     label_visibility="collapsed", on_change=autosave)
+        else:
+            st.radio(label, ["Yes", "No", "I don't know"], key=qid, index=None,
+                     horizontal=True, captions=q.get("captions"), on_change=autosave)
     elif qtype == TYPE_YESNO_NA:
         st.radio(label, ["Yes", "No", "N/A"], key=qid, index=None, horizontal=True,
                  on_change=autosave)
@@ -1421,8 +1459,15 @@ def render_question(q):
         st.radio(label, ["Yes", "No"], key=qid, index=None, horizontal=True,
                  on_change=autosave)
     elif qtype == TYPE_SCREENING_NA:
-        st.radio(label, ["Yes", "No", "N/A"], key=qid, index=None, horizontal=True,
-                 on_change=autosave)
+        note = q.get("note")
+        if note:
+            st.markdown(label)
+            st.caption(note)
+            st.radio(label, ["Yes", "No", "N/A"], key=qid, index=None, horizontal=True,
+                     captions=q.get("captions"), label_visibility="collapsed", on_change=autosave)
+        else:
+            st.radio(label, ["Yes", "No", "N/A"], key=qid, index=None, horizontal=True,
+                     captions=q.get("captions"), on_change=autosave)
     elif qtype == TYPE_GRADED:
         labels = [opt["label"] for opt in q["options"]]
         st.radio(label, labels, key=qid, index=None, on_change=autosave)
@@ -1587,11 +1632,22 @@ def render_results():
     top_left, top_right = st.columns([1, 2])
 
     with top_left:
+        st.subheader("Category scores")
+        for cat, s in cat_scores:
+            label = f"{cat['id']}. {cat['name']}"
+            if s is None:
+                st.write(f"**{label}** — _excluded (no valid data)_")
+            else:
+                st.write(f"**{label}** — {s * 100:.1f} / 100")
+                st.progress(s)
+
+        st.divider()
+
         if overall is None:
-            st.metric("Overall (weighted by category)", "—")
+            st.markdown("**Overall (weighted by category):** —")
         else:
             score_pct = overall * 100
-            st.metric("Overall (weighted by category)", f"{score_pct:.1f} / 100")
+            st.markdown(f"**Overall (weighted by category):** {score_pct:.1f} / 100")
             # Score interpretation
             if score_pct >= 90:
                 lbl, color, meaning, action = "Excellent", "green", "Exceptional, exceeds best practice", "Celebrate & share as model"
@@ -1603,7 +1659,7 @@ def render_results():
                 lbl, color, meaning, action = "Poor", "red", "Significant deficits, occupant health at risk", "Priority intervention"
             else:
                 lbl, color, meaning, action = "Critical", "darkred", "Critical failure, immediate action needed", "Red alert / retrofit"
-            st.markdown(
+            st.caption(
                 f"**Rating:** :{color}[{lbl}]  \n"
                 f"**Meaning:** {meaning}  \n"
                 f"**Action:** {action}"
@@ -1620,15 +1676,6 @@ def render_results():
                 f"Indicates an information/documentation gap: Excluded from the "
                 f"calculation, not treated as bad performance."
             )
-
-        st.subheader("Category scores")
-        for cat, s in cat_scores:
-            label = f"{cat['id']}. {cat['name']}"
-            if s is None:
-                st.write(f"**{label}** — _excluded (no valid data)_")
-            else:
-                st.write(f"**{label}** — {s * 100:.1f} / 100")
-                st.progress(s)
 
     with top_right:
         labels = [c["name"] for c in CATEGORIES]

@@ -154,56 +154,6 @@ def generate_pdf(scores: dict, session_id: str) -> bytes:
     )
     story.append(Spacer(1, 0.4 * cm))
 
-    # Overall score
-    overall = scores.get("overall_score")
-    if overall is not None:
-        story.append(
-            Paragraph(
-                f"<b>Overall Score: {overall:.1f} / 100</b>",
-                ParagraphStyle(
-                    "overall",
-                    parent=body,
-                    fontSize=16,
-                    alignment=TA_CENTER,
-                    textColor=colors.HexColor("#2E7D32"),
-                    spaceBefore=8,
-                    spaceAfter=6,
-                ),
-            )
-        )
-        rating = scores.get("rating", "")
-        meaning = scores.get("meaning", "")
-        action = scores.get("action", "")
-        if rating:
-            story.append(
-                Paragraph(
-                    f"<b>Rating:</b> {rating} &nbsp;&nbsp;|&nbsp;&nbsp; "
-                    f"<b>Meaning:</b> {meaning} &nbsp;&nbsp;|&nbsp;&nbsp; "
-                    f"<b>Action:</b> {action}",
-                    ParagraphStyle(
-                        "interpretation",
-                        parent=body,
-                        fontSize=10,
-                        alignment=TA_CENTER,
-                        spaceBefore=2,
-                        spaceAfter=12,
-                    ),
-                )
-            )
-    else:
-        story.append(
-            Paragraph(
-                "<b>Overall Score: excluded</b>",
-                ParagraphStyle(
-                    "overall",
-                    parent=body,
-                    fontSize=16,
-                    alignment=TA_CENTER,
-                    spaceBefore=8,
-                    spaceAfter=12,
-                ),
-            )
-        )
     story.append(Spacer(1, 0.4 * cm))
 
     cats = scores.get("categories", {})
@@ -235,6 +185,58 @@ def generate_pdf(scores: dict, session_id: str) -> bytes:
     for name in cat_names:
         cat_rows.append([name, _fmt(cats[name].get("score"))])
     story.append(_table(cat_rows, "#2E7D32"))
+    story.append(Spacer(1, 0.4 * cm))
+
+    # Overall score (shown smaller, underneath the category breakdown)
+    overall = scores.get("overall_score")
+    if overall is not None:
+        story.append(
+            Paragraph(
+                f"<b>Overall Score: {overall:.1f} / 100</b>",
+                ParagraphStyle(
+                    "overall",
+                    parent=body,
+                    fontSize=12,
+                    alignment=TA_CENTER,
+                    textColor=colors.HexColor("#2E7D32"),
+                    spaceBefore=4,
+                    spaceAfter=4,
+                ),
+            )
+        )
+        rating = scores.get("rating", "")
+        meaning = scores.get("meaning", "")
+        action = scores.get("action", "")
+        if rating:
+            story.append(
+                Paragraph(
+                    f"<b>Rating:</b> {rating} &nbsp;&nbsp;|&nbsp;&nbsp; "
+                    f"<b>Meaning:</b> {meaning} &nbsp;&nbsp;|&nbsp;&nbsp; "
+                    f"<b>Action:</b> {action}",
+                    ParagraphStyle(
+                        "interpretation",
+                        parent=body,
+                        fontSize=9,
+                        alignment=TA_CENTER,
+                        spaceBefore=2,
+                        spaceAfter=8,
+                    ),
+                )
+            )
+    else:
+        story.append(
+            Paragraph(
+                "<b>Overall Score: excluded</b>",
+                ParagraphStyle(
+                    "overall",
+                    parent=body,
+                    fontSize=12,
+                    alignment=TA_CENTER,
+                    spaceBefore=4,
+                    spaceAfter=8,
+                ),
+            )
+        )
     story.append(Spacer(1, 0.6 * cm))
 
     # Per-category breakdown
