@@ -66,17 +66,6 @@ def send_report(pdf_bytes: bytes, session_id: str, overall_score=None, rating=No
         )
         return False
 
-    score_line = ""
-    if overall_score is not None:
-        score_line = f"\nOverall Score: {overall_score:.1f} / 100"
-        if rating:
-            score_line += f"\nRating: {rating}"
-            score_line += f"\nMeaning: {meaning}"
-            score_line += f"\nAction: {action}"
-        score_line += "\n"
-    else:
-        score_line = "\nOverall Score: excluded (no valid category scores)\n"
-
     msg = EmailMessage()
     msg["From"] = SENDER_EMAIL
     msg["To"] = RECIPIENT_EMAIL
@@ -84,8 +73,7 @@ def send_report(pdf_bytes: bytes, session_id: str, overall_score=None, rating=No
     msg.set_content(
         "Hello,\n\n"
         f"The Health-Promoting Spaces Assessment Report for session "
-        f"{session_id} is attached.\n"
-        f"{score_line}\n"
+        f"{session_id} is attached.\n\n"
         "Regards"
     )
     msg.add_attachment(

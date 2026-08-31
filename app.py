@@ -321,10 +321,11 @@ CATEGORIES = [
                             "sub_items": [
                                 "Seating in work, waiting, or meeting areas is designed or selected to support comfortable posture in most areas (more than half of relevant spaces) (e.g., chairs with back support, appropriate seat height and depth)",
                                 "Circulation and layout allow sufficient space for comfortable movement and safe use of furniture and equipment in most areas (more than half of relevant spaces)",
-                                "Furniture design accommodates a range of users and body sizes, including the provision of adjustable or ergonomically designed elements in most areas (more than half of relevant spaces) (e.g., varied seating types, adjustable workstations)",
+                                "Furniture design accommodates a range of users and body sizes, including the provision of adjustable or ergonomically designed elements in most areas (more than half of relevant spaces) (e.g., varied seating types)",
                                 {
                                     "text": "Work surfaces and furniture are designed to minimise prolonged pressure, continuous body contact, and repetitive mechanical stress (e.g., rounded desk edges and appropriate work surface design) in most areas (more than half of relevant spaces)",
                                     "options": ["Yes", "No", "N/A"],
+                                    "captions": ["", "", "(Facility does not have workspaces/workstations)"],
                                 },
                             ],
                         }],
@@ -347,7 +348,8 @@ CATEGORIES = [
                         "id": "1.1", "name": "Waste storage room",
                         "questions": [
                             {"qid": "B_Q1", "type": TYPE_SCREENING_NA,
-                             "text": "Does the building provide a dedicated waste storage room handling odor- or pollutant-generating waste?"},
+                             "text": "Does the building provide a dedicated waste storage room handling odor- or pollutant-generating waste?",
+                             "captions": ["", "", "(The facility does not generate critical waste)"]},
                             {"qid": "B_Q2", "type": TYPE_MULTI,
                              "text": "What are the characteristics of the waste storage room?",
                              "sub_items": [
@@ -386,7 +388,7 @@ CATEGORIES = [
                         "id": "1.4", "name": "Healthy interior materials",
                         "questions": [{
                             "qid": "B_Q7", "type": TYPE_MULTI,
-                            "text": "Are interior finishes and materials applied to most (more than half) of the main interior surfaces (e.g., floors, walls, ceilings, counters, partitions) specified or selected based on their contribution to occupant health? (Recognized healthy-materials resources: Friendly Materials, Habitable, GBCE materials platform.)",
+                            "text": "Are interior finishes and materials applied to most (more than half) of the main interior surfaces (e.g., floors, walls, ceilings, counters, partitions) specified or selected based on their contribution to occupant health?",
                             "sub_items": [
                                 "The main interior horizontal and vertical surfaces (e.g., floors, walls, worktops) are finished with continuous, non-porous materials that prevent dirt accumulation, are resistant to frequent cleaning and disinfectant products",
                                 {
@@ -411,7 +413,7 @@ CATEGORIES = [
                             {"qid": "B_Q10", "type": TYPE_SCREENING,
                              "text": "Does the building have a centralized hot-water system (e.g., a boiler, heat pump, or storage tank distributing hot water through the building) that supplies sinks, showers, or kitchens? (Local electric heaters serving only one sink or appliance do not count as a centralized hot-water system.)"},
                             {"qid": "B_Q11", "type": TYPE_MULTI,
-                             "text": "Which of the following Legionella prevention measures are in place for the hot-water system (according to Spanish regulations or technical guidance)? (For project-stage buildings, refer to design specifications or intended operation. Regulation reference: RD 487/2022 and RD 614/2024.)",
+                             "text": "Which of the following Legionella prevention measures are in place for the hot-water system (according to Spanish regulations or technical guidance)? (For project-stage buildings, refer to design specifications or intended operation.)",
                              "sub_items": [
                                  "Hot water systems are designed to enable the maintenance of temperatures that reduce Legionella risk (e.g., centralized vs decentralized systems, storage tanks sized correctly, minimizing long pipe runs, thermostatic controls, recirculation loops)",
                                  "The hot water system is designed to allow regular flushing and disinfection, especially for infrequently used outlets (e.g., minimizing dead legs, providing accessible drain or flushing points, designing recirculation loops, or ensuring easy access to valves and outlets for maintenance)",
@@ -484,15 +486,15 @@ CATEGORIES = [
                         "id": "3.3", "name": "Emergency gathering point",
                         "questions": [{
                             "qid": "B_Q17", "type": TYPE_YESNO_NA,
-                            "text": "Is there a designated emergency gathering point clearly identified and signposted for the building (e.g., on displayed evacuation maps and signage)? "
-                                    "(N/A for very small buildings with direct street exit only. Regulation reference: Real Decreto 393/2007 / CTE DB-SI.)",
+                            "text": "Is there a designated emergency gathering point clearly identified and signposted for the building (e.g., on displayed evacuation maps and signage)? (N/A for very small buildings with direct street exit only.)"
+                                    "(N/A for very small buildings with direct street exit only.",
                         }],
                     },
                     {
                         "id": "3.4", "name": "Emergency exit signs",
                         "questions": [{
                             "qid": "B_Q18", "type": TYPE_YESNO,
-                            "text": "Are all doors used as emergency exits (including any designated emergency exits) designed to be clearly signed, unobstructed, and usable during occupancy? (Regulation reference: Real Decreto 393/2007 / CTE DB-SI.)",
+                            "text": "Are all doors used as emergency exits (including any designated emergency exits) designed to be clearly signed, unobstructed, and usable during occupancy?",
                         }],
                     },
                     {
@@ -607,7 +609,7 @@ CATEGORIES = [
                         "id": "3.2", "name": "Publicly accessible climate refuge",
                         "questions": [{
                             "qid": "C_Q10", "type": TYPE_YESNO_NA,
-                            "text": "Does the building provide a ground-floor 'Climate Refuge' that is open to the general public and equipped with all essential supplies (e.g., shade, permanent seating, water supply, etc.)? (N/A if the building has no spatial opportunity for general public access. Reference: Llei 16/2017 del canvi clim\u00e0tic and ESCACC30 guidelines.)",
+                            "text": "Does the building provide a ground-floor 'Climate Refuge' that is open to the general public and equipped with all essential supplies (e.g., shade, permanent seating, water supply, etc.)? (N/A if the building has no spatial opportunity for general public access.)",
                         }],
                     },
                 ],
@@ -628,7 +630,7 @@ CATEGORIES = [
                         "id": "1.1", "name": "Art integration opportunities",
                         "questions": [{
                             "qid": "D_Q1", "type": TYPE_MULTI,
-                            "text": "Does the building design support opportunities for integrating art (e.g., permanent or rotating art installations) into interior or exterior spaces? (Reference: Llei del percentatge cultural de Catalunya (Llei 8/2021), Llei 2/2023, del 14 de febrer, del sistema de l\u2019habitatge, l\u2019arquitectura i l\u2019urbanisme de Catalunya.)",
+                            "text": "Does the building design support opportunities for integrating art (e.g., permanent or rotating art installations) into interior or exterior spaces?",
                             "sub_items": [
                                 "Walls, surfaces, or architectural elements (e.g., mounting points, display systems) are available and suitable for displaying or integrating artwork",
                                 "Circulation or common areas include spaces where art could be installed without obstructing movement or function",
@@ -675,24 +677,25 @@ CATEGORIES = [
                              "note": "Natural views include vegetation, trees, gardens, water features, and open sky. Views limited only to buildings or hard surfaces are not considered nature views.",
                              "captions": ["", "", "(there are no permanent work areas or regularly occupied spaces where occupants remain for extended periods)"]},
                             {"qid": "D_Q5", "type": TYPE_MULTI,
-                             "text": "Outdoor nature view characteristics:",
+                             "text": "Which of the following characteristics describes how the building design enables access to outdoor views of nature from regularly occupied staff and user areas (e.g., workspaces, lounges, waiting or seating areas)? ",
                              "sub_items": [
-                                 "All or majority of regularly occupied areas have direct views of outdoor natural elements",
-                                 "Nature views available from majority of seating / workstation locations (≥50–75%)",
+                                 "All or a majority (more than half) of regularly occupied areas provide direct views of outdoor natural elements, including green space (e.g., trees, vegetation, gardens, landscaped areas) and/or blue space (e.g., water bodies or water features).",
+                                 "Nature views are available from a majority of seating or workstation locations within these spaces (e.g., approximately ≥50–75% of seats or desks have access to outdoor nature views).",
                              ]},
                         ],
                     },
                     {
-                        "id": "2.2", "name": "Indoor nature elements",
+                        "id": "2.2", "name": "Access to indoor views ",
                         "questions": [
                             {"qid": "D_Q6", "type": TYPE_SCREENING_NA,
-                             "text": "Does the building include indoor natural elements (plants, green walls, water features) in regularly occupied spaces?"},
+                             "text": "Does the building include indoor natural elements (plants, green walls, water features) in regularly occupied spaces? (e.g., workspaces, lounges, waiting areas, library seating, staff break rooms)? Indoor natural elements may include plants, indoor gardens, green walls, water features, or landscaped atria.",
+                             "captions": ["", "", "(There are no regularly occupied spaces )"]},
                             {"qid": "D_Q7", "type": TYPE_MULTI,
-                             "text": "Indoor nature view characteristics:",
+                             "text": "Which of the following characteristics describes how the building design enables access to indoor nature views from regularly occupied areas?",
                              "sub_items": [
-                                 "Majority of regularly occupied spaces include visible indoor natural elements",
-                                 "Interior layouts designed so indoor nature is visible from majority of seating locations",
-                                 "Larger nature-integrated spaces (indoor gardens, courtyards, atria) included",
+                                 "A majority (more than half) of regularly occupied spaces include visible indoor natural elements (e.g., plants, green walls, indoor gardens, water feature)",
+                                 "Interior layouts are designed so that indoor natural elements are visible from a majority (more than half) of seating or workstation locations, with minimal visual obstruction (e.g., avoiding high partitions or obstructive furniture).",
+                                 "The building design incorporates larger nature-integrated spaces (e.g., indoor gardens, landscaped courtyards, or atria) that enable visible connections to nature from surrounding interior areas.",
                              ]},
                         ],
                     },
@@ -705,7 +708,7 @@ CATEGORIES = [
                         "id": "3.1", "name": "Basic nature access",
                         "questions": [{
                             "qid": "D_Q8", "type": TYPE_YESNO_NA,
-                            "text": "Does the building design provide access to at least one outdoor space with vegetation or natural elements (on-site or within a 5–6 minute walking distance)? Applicable to buildings with continuous use or where occupants spend extended periods of time (e.g., work, study, waiting, or rest). (N/A if the building is primarily used for short-duration or event-based activities with no staff.)",
+                            "text": "Does the building design provide access to at least one outdoor space with vegetation or natural elements (on-site or within a 9-10 minute walking distance)? Applicable to buildings with continuous use or where occupants spend extended periods of time (e.g., work, study, waiting, or rest). (N/A if the building is primarily used for short-duration or event-based activities with no staff.)",
                         }],
                     },
                     {
@@ -765,7 +768,7 @@ CATEGORIES = [
                         "id": "1.1", "name": "Exterior Acoustic Comfort",
                         "questions": [
                             {"qid": "E_Q1", "type": TYPE_YESNO_IDK,
-                             "text": "Does the building comply with applicable national or local regulations for protection against external noise (CTE DB-HR in Spain), including the acoustic insulation requirements corresponding to the building's environmental noise classification? (Applicable regulation: CTE DB-HR / Local noise maps or acoustic zoning.)"},
+                             "text": "Does the building comply with applicable national or local regulations for protection against external noise (CTE DB-HR in Spain), including the acoustic insulation requirements corresponding to the building's environmental noise classification?"},
                             {"qid": "E_Q2", "type": TYPE_MULTI,
                              "text": "How does the building design reduce exposure to exterior noise in regularly occupied areas? Indicate whether the following conditions are met in most (more than half) of applicable spaces. Select 'N/A' if the building or project is located in an environment without significant external noise exposure.",
                              "sub_items": [
@@ -784,7 +787,7 @@ CATEGORIES = [
                         "id": "1.2", "name": "Interior Acoustic Comfort",
                         "questions": [
                             {"qid": "E_Q3", "type": TYPE_YESNO_IDK,
-                             "text": "Does the building comply with applicable national or local regulations for interior acoustic performance (e.g., CTE DB-HR in Spain)? (CTE DB-HR establishes requirements for airborne sound insulation between spaces, impact noise between floors, noise from building installations, and acoustic comfort in interior spaces, based on acoustic design calculations, simulations, or certified measurements, depending on the project stage.)"},
+                             "text": "Does the building comply with applicable national or local regulations for interior acoustic performance (e.g., CTE DB-HR in Spain)?"},
                             {"qid": "E_Q4", "type": TYPE_MULTI,
                              "text": "How does the building design support acoustic comfort inside regularly occupied areas? Indicate whether the following conditions are met in most (more than half) of applicable spaces.",
                              "sub_items": [
@@ -812,18 +815,18 @@ CATEGORIES = [
                 "id": "2", "name": "Lighting",
                 "indicators": [
                     {
-                        "id": "2.1", "name": "Lighting conditions",
+                        "id": "2.1", "name": "Interior Lighting quality ",
                         "questions": [{
                             "qid": "E_Q6", "type": TYPE_MULTI,
-                            "text": "Lighting conditions in regularly occupied areas:",
+                            "text": "Do lighting conditions in regularly occupied staff and user areas provide (or are designed to provide) adequate illumination and visual comfort for activities? Indicate whether the following conditions are met in most (more than half) of the applicable spaces. Lighting conditions may be evaluated using measurements in existing buildings (lux meters or mobile apps) or lighting simulation tools during the design stage.",
                             "sub_items": [
-                                "Workstation / task areas have sufficient and even lighting (≥500 lux)",
-                                "Communal / circulation areas have sufficient lighting (≥200–300 lux)",
-                                "Lighting evenly distributed across spaces",
-                                "Lighting design minimizes glare",
-                                "Good color rendering (CRI ≥80, appropriate color temperature)",
-                                "Lighting systems avoid visible flicker",
-                                "Lighting supports circadian rhythms (where relevant)",
+                                "Lighting levels (measured or simulated) at workstations or task areas (e.g., workspaces, makerspaces) are sufficient and even (approximately ≥500 lux) where detailed work is performed.",
+                                "Lighting levels (measured or lighting simulation results) in communal or circulation areas (e.g., entrances, waiting areas, lounges, corridors) are sufficient and even (approximately ≥200–300 lux)",
+                                "Lighting levels (measured, observed, or simulated) are evenly distributed across spaces, avoiding strong contrasts between bright and dark areas (e.g., uneven fixture spacing or poorly lit corners).",
+                                "Lighting design minimizes glare or visual discomfort in regularly occupied areas (e.g., through diffusers, indirect lighting, recessed fixtures, shielding, or appropriate luminaire placement).",
+                                "Lighting provides good color rendering and natural color appearance (e.g., luminaires with high color rendering index – CRI ≥80, appropriate color temperature for the activity).",
+                                "Lighting systems avoid visible flicker or visual discomfort (e.g., high-quality LED drivers, flicker-free luminaires, stable dimming systems)",
+                                "Where relevant (e.g., in regularly occupied spaces with limited daylight or extended use, such as offices or waiting areas) lighting design supports circadian rhythms through variation in light intensity and/or color temperature over the day (e.g., tunable lighting or daylight-responsive controls).",
                             ],
                         }],
                     },
@@ -836,7 +839,7 @@ CATEGORIES = [
                         "id": "3.1", "name": "Thermal comfort compliance",
                         "questions": [{
                             "qid": "E_Q7", "type": TYPE_YESNO_IDK,
-                            "text": "Does the building's thermal comfort design (through mechanical systems, passive strategies, or hybrid solutions) comply with applicable national or local regulations (e.g., RITE in Spain)? (RITE: Reglamento de Instalaciones Térmicas en los Edificios. Compliance may be demonstrated through building design documentation, system specifications, or operational performance. Additional voluntary guidance: ASHRAE 55, WELL Building Standard – Thermal Comfort.)",
+                            "text": "Does the building's thermal comfort design (through mechanical systems, passive strategies, or hybrid solutions) comply with applicable national or local regulations (e.g., RITE in Spain)?",
                         }],
                     },
                     {
@@ -856,7 +859,8 @@ CATEGORIES = [
                         "id": "3.3", "name": "Air velocity / Air movement",
                         "questions": [{
                             "qid": "E_Q9", "type": TYPE_MULTI,
-                            "text": "How is air movement managed to maintain thermal comfort in regularly occupied areas? Indicate whether the following conditions are met in most (more than half) of applicable spaces. (Relevant guidance: ASHRAE 55 – Thermal Environmental Conditions for Human Occupancy; EN 16798-1 – Indoor environmental input parameters for building design.)",
+                            "text": "How is air movement managed to maintain thermal comfort in regularly occupied areas? Indicate whether the following conditions are met in most (more than half) of applicable spaces.",
+                            "note": "(In design-stage projects, airflow conditions may be evaluated through HVAC design calculations or simulation. In existing buildings, air velocity may be measured using simple anemometers or environmental sensors.)",
                             "sub_items": [
                                 "Ventilation and airflow distribution are designed to provide balanced air movement without causing drafts or direct airflow on occupants (e.g., appropriate diffuser placement, displacement ventilation, or supply air positioned away from seating/work areas)",
                                 "Air movement can be adjusted or moderated in different spaces (e.g., operable windows, ventilation controls, ceiling fans, or zoned mechanical ventilation), without disrupting the operation of mechanical systems where applicable",
@@ -867,7 +871,7 @@ CATEGORIES = [
                         "id": "3.4", "name": "Humidity",
                         "questions": [{
                             "qid": "E_Q10", "type": TYPE_MULTI,
-                            "text": "How is indoor humidity managed in the building? Indicate whether the following conditions are met in most (more than half) of applicable spaces. (Relevant references: RITE; ASHRAE 55; EN 16798-1. Common standards recommend maintaining relative humidity between approximately 30% and 60% in regularly occupied spaces.)",
+                            "text": "How is indoor humidity managed in the building? Indicate whether the following conditions are met in most (more than half) of applicable spaces.",
                             "sub_items": [
                                 "Building systems are designed (e.g., HVAC humidity control, ventilation design, or design calculations/simulations) to maintain indoor humidity within recommended ranges (typically ~30–60% RH)",
                                 "Ventilation systems, building systems (e.g., HVAC), or passive strategies include humidity control or moisture management strategies where relevant (e.g., exhaust fans in bathrooms/kitchens, mechanical ventilation, or natural ventilation strategies)",
@@ -909,7 +913,7 @@ CATEGORIES = [
                         "id": "4.3", "name": "Building-Specific Environmental Health Hazards",
                         "questions": [
                             {
-                                "qid": "E_Q13", "type": TYPE_GRADED,
+                                "qid": "E_Q13a", "type": TYPE_GRADED,
                                 "text": "Which statement best describes how asbestos risks affecting indoor air quality are addressed in the building? Choose one that applies.",
                                 "options": [
                                     {"label": "The building was constructed after the ban on asbestos-containing materials in Spain (2002) and no asbestos-containing materials are known or documented; or the building was constructed before the ban and a professional assessment has confirmed the absence of asbestos materials (remediation has been implemented by qualified professionals).", "score": 1.0},
@@ -953,14 +957,14 @@ CATEGORIES = [
                         "id": "4.6", "name": "Compliance with Indoor Air Quality Regulations",
                         "questions": [{
                             "qid": "E_Q16", "type": TYPE_YESNO_IDK,
-                            "text": "Are the building's indoor air quality conditions designed to comply with applicable regulations or standards (e.g., RITE in Spain, EN/ASHRAE/WELL guidelines)?",
+                            "text": "Are the building's indoor air quality conditions designed to comply with applicable regulations or standards (e.g., RITE in Spain)?",
                         }],
                     },
                     {
                         "id": "4.7", "name": "Indoor Air Quality Management / Monitoring",
                         "questions": [{
                             "qid": "E_Q17", "type": TYPE_MULTI,
-                            "text": "How does the building design support the monitoring and control of indoor air quality conditions? (Indoor air quality may be assessed according to RITE, WHO Indoor Air Quality Guidelines, ASHRAE 62.1, or EN 16798-1. Monitoring commonly includes CO\u2082, particulate matter, VOCs, temperature, and humidity.)",
+                            "text": "How does the building design support the monitoring and control of indoor air quality conditions?",
                             "sub_items": [
                                 "Design includes monitoring systems or sensors for indoor environmental conditions (e.g., temperature and humidity) accessible to building managers and/or occupants.",
                                 "Design includes indoor air quality monitoring and/or assessment appropriate to the building and its location (e.g., CO₂, particulate matter, VOCs) with information accessible to building managers and/or occupants.",
@@ -1431,13 +1435,18 @@ def render_question(q):
 
     if qtype == TYPE_MULTI:
         st.markdown(label)
+        note = q.get("note")
+        if note:
+            st.caption(note)
         for i, item in enumerate(q["sub_items"]):
             if isinstance(item, dict):
-                sub_text, sub_options = item["text"], item.get("options", ["Yes", "No"])
+                sub_text = item["text"]
+                sub_options = item.get("options", ["Yes", "No"])
+                sub_captions = item.get("captions")
             else:
-                sub_text, sub_options = item, ["Yes", "No"]
+                sub_text, sub_options, sub_captions = item, ["Yes", "No"], None
             st.radio(sub_text, sub_options, key=f"{qid}_{i}", index=None,
-                     horizontal=True, on_change=autosave)
+                     horizontal=True, captions=sub_captions, on_change=autosave)
     elif qtype == TYPE_YESNO:
         st.radio(label, ["Yes", "No"], key=qid, index=None, horizontal=True,
                  on_change=autosave)
