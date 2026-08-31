@@ -286,7 +286,7 @@ CATEGORIES = [
                             "text": "Which of the following facilities are included in the building design to support regular occupants/staff in promoting physical activity?",
                             "sub_items": [
                                 "Bicycle racks inside the building (for staff use only)",
-                                "Fitness area (small gym) within the building or 5–6 minutes’ walkable distance",
+                                "Fitness area (small gym) within the building or 9-10 minutes walkable distance",
                                 "Showers and lockers within the building, provided in sufficient number and capacity to accommodate staff needs",
                             ],
                         }],
@@ -486,8 +486,7 @@ CATEGORIES = [
                         "id": "3.3", "name": "Emergency gathering point",
                         "questions": [{
                             "qid": "B_Q17", "type": TYPE_YESNO_NA,
-                            "text": "Is there a designated emergency gathering point clearly identified and signposted for the building (e.g., on displayed evacuation maps and signage)? (N/A for very small buildings with direct street exit only.)"
-                                    "(N/A for very small buildings with direct street exit only.",
+                            "text": "Is there a designated emergency gathering point clearly identified and signposted for the building (e.g., on displayed evacuation maps and signage)? (N/A for very small buildings with direct street exit only.)",
                         }],
                     },
                     {
